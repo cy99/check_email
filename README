@@ -1,0 +1,15 @@
+Querying DNS Records Using C
+
+The source code may be found here (https://github.com/jrziviani/check_email)
+
+The Domain Name Service is one of the most important internet services. It is
+responsible to translate the domain names into the real internet address.
+Without it there was no www.name.com but only numbers like 123.123.123.123.
+Imagine you don't have google.com but 74.125.113.99 or 199.59.148.82 instead of
+twitter.com or 69.171.229.11 in place of simply facebook.com.
+
+This code is a how to on how to query DNS records using C language. The article
+corresponding to it is located at http://www.ziviani.net
+
+Compile:
+gcc -g check_email.c -lresolv -o check
