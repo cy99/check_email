@@ -211,18 +211,27 @@ int main(int argc, char *argv[])
 
     int i;
     int ret;
+    
+    // if we receive any other response from the server we will try the
+    // next one until the loop finishes
     for (i = 0; i < msgs_number; ++i) {
 
         printf("%d - %s\n", i, list[i]);
 
         ret = smtp_query(list[i], email);
 
-        if (ret != SUCCESS) {
+        // server tells this e-mail is not valid
+        if (ret == SMTP_INVALID_EMAIL_ADDR) {
+
             printf("This email is not valid\n");
             break;
-        } else {
+
+        // ok, this email is real in that domain
+        } else if (ret == SUCCESS) {
+
             printf("This is a valid e-mail\n");
             break;
+
         }
     }
 
