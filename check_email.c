@@ -34,7 +34,7 @@ static int send_message(int *socket, char *msg)
     int len = 0;
     char buffer[4];
     
-    write(*socket, msg, strlen(msg));
+    len = write(*socket, msg, strlen(msg));
 
     // wait 1s before reading the response back from the server
     sleep(1);
@@ -55,7 +55,7 @@ static int send_message(int *socket, char *msg)
 
 // open a socket to the smtp server found and check whether it is a valid email 
 // or not
-static int smtp_query(char *server, char *email)
+int smtp_query(char *server, char *email)
 {
     struct hostent *host;
     struct sockaddr_in server_addr;
@@ -108,7 +108,7 @@ static int smtp_query(char *server, char *email)
 
 // based on a e-mail address domain, look up the dns mx (mail exchange)
 // record in order to find how it should be routed 
-static int dns_mx_lookup(char *domain, char ***server_list)
+int dns_mx_lookup(char *domain, char ***server_list)
 {
     int answer_len, message_number;
     unsigned char answer[NS_PACKETSZ];

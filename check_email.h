@@ -27,6 +27,7 @@ enum rcode {
     OUT_OF_MEMORY            = -16
 };
 
-static int dns_mx_lookup(char *domain, char ***server_list);
+int dns_mx_lookup(char *domain, char ***server_list);
+int smtp_query(char *server, char *email);
 
 #endif
