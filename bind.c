@@ -16,9 +16,12 @@ static PyObject *get_dns_mx_record(PyObject *self, PyObject *args)
 
     // extract the e-mail from the parameters
     if (!PyArg_ParseTuple(args, "s", &email)) {
+
         // create an AttributeError exception (no need to increment ref count)
         PyErr_SetString(PyExc_AttributeError, "Usage: get_dns_mx_record(\"email@domain.com\")");
-        
+
+        Py_CLEAR(result);
+
         // raise the AttributeError exception
         return NULL; 
     }
@@ -30,6 +33,8 @@ static PyObject *get_dns_mx_record(PyObject *self, PyObject *args)
         // raise a runtime exception in python if the parameter is not right
         PyErr_SetString(PyExc_RuntimeError, "The email must respect the name@domain format");
 
+        Py_CLEAR(result);
+
         return NULL;
     }
 
@@ -37,6 +42,8 @@ static PyObject *get_dns_mx_record(PyObject *self, PyObject *args)
 
         // raise a runtime exception in python if the domain is too large 
         PyErr_SetString(PyExc_RuntimeError, "The domain name must not be greater than 512 characters");
+
+        Py_CLEAR(result);
 
         return NULL;
     }
@@ -48,7 +55,9 @@ static PyObject *get_dns_mx_record(PyObject *self, PyObject *args)
     for (i = 0; i < msgs_number; ++i) {
     
         // append each record found in a python list
-        PyList_Append(result, PyString_FromString(list[i]));
+        PyObject *pyMessage = PyString_FromString(list[i]);
+        PyList_Append(result, pyMessage);
+        Py_CLEAR(pyMessage);
 
     }
 
